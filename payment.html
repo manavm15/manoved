@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment - Manoved</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .payment-container {
+      max-width: 500px;
+      margin: 100px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .payment-container button {
+      margin-top: 20px;
+      padding: 12px;
+      background: #6a11cb;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Menu (reuse shared code) -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">Manoved</a>
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+        <li class="nav-item"><a href="therapists.html" class="nav-link">Therapists</a></li>
+        <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+        <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="nav-icon"><i class="fas fa-bars"></i></div>
+    </div>
+  </nav>
+
+  <div class="payment-container">
+    <h2>Payment</h2>
+    <p>Click the button below to simulate payment.</p>
+    <button id="payNow">Pay Now</button>
+  </div>
+
+  <script>
+    // Get bookingId from URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const bookingId = urlParams.get('bookingId');
+    document.getElementById('payNow').addEventListener('click', async () => {
+      // Call the dummy payment endpoint
+      const response = await fetch('/api/payments', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ bookingId })
+      });
+      if(response.ok) {
+        // On success, redirect to a confirmation page or show success message
+        alert("Payment successful! A Zoom link has been sent to your email.");
+        window.location.href = "my-bookings.html";
+      } else {
+        alert("Payment failed. Please try again.");
+      }
+    });
+  </script>
+</body>
+</html>

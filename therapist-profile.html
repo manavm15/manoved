@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Therapist Profile - Manoved</title>
+  <!-- FullCalendar CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet" />
+  <!-- Shared Styles -->
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Font Awesome for icons -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <style>
+    /* Calendar container styling */
+    #calendar {
+      max-width: 900px;
+      margin: 20px auto;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+    /* Styling for FullCalendar's now indicator to mimic Outlook */
+    .fc-now-indicator-line {
+      border-color: #ff0000; /* red line */
+      border-width: 2px;
+    }
+    .fc-now-indicator-arrow {
+      display: none; /* hide the arrow if desired */
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Menu -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">Manoved</a>
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+        <li class="nav-item"><a href="therapists.html" class="nav-link active">Therapists</a></li>
+        <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+        <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="nav-icon"><i class="fas fa-bars"></i></div>
+    </div>
+  </nav>
+
+  <!-- Therapist Profile Header -->
+  <div class="container profile-container">
+    <div class="profile-header">
+      <img src="therapist1.jpg" alt="Therapist Image" class="profile-img">
+      <div class="profile-details">
+        <h2>Dr. Ananya Sharma</h2>
+        <p>Specialist in Anxiety & Stress Management</p>
+        <p>Location: Mumbai</p>
+        <p>Experience: 10+ years</p>
+        <p>Bio: Dr. Ananya Sharma has helped hundreds find balance and inner peace using compassionate and effective therapeutic approaches.</p>
+        <button onclick="document.getElementById('calendar').scrollIntoView({ behavior: 'smooth' });" class="btn">View Availability</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interactive Calendar -->
+  <div id="calendar"></div>
+
+  <!-- Booking Modal -->
+  <div class="modal-overlay" id="bookingModal">
+    <div class="modal">
+      <h3>Confirm Your Booking</h3>
+      <p id="selectedSlotText"></p>
+      <button class="btn confirm" id="confirmBooking">Yes, Book This Slot</button>
+      <button class="btn cancel" id="cancelBooking">Cancel</button>
+    </div>
+  </div>
+
+  <!-- FullCalendar JS -->
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var calendarEl = document.getElementById('calendar');
+      var selectedSlot = null;
+      var modalOverlay = document.getElementById('bookingModal');
+      var selectedSlotText = document.getElementById('selectedSlotText');
+      var confirmBookingBtn = document.getElementById('confirmBooking');
+      var cancelBookingBtn = document.getElementById('cancelBooking');
+
+      // Initialize FullCalendar in timeGridDay view with desired settings
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'timeGridDay',
+        initialDate: '2025-03-05', // Demo date; in production, set dynamically
+        slotDuration: '00:45:00',
+        slotLabelInterval: '00:45',
+        slotMinTime: '08:00:00',
+        slotMaxTime: '17:00:00',
+        selectable: true,
+        selectMirror: true,
+        nowIndicator: true,   // Shows the current time line
+        businessHours: { startTime: '08:00', endTime: '17:00' },
+        headerToolbar: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'timeGridDay'
+        },
+        // Booked sessions shown in gray
+        events: [
+          { title: 'Booked', start: '2025-03-05T09:00:00', end: '2025-03-05T09:45:00', color: 'gray' },
+          { title: 'Booked', start: '2025-03-05T13:00:00', end: '2025-03-05T13:45:00', color: 'gray' }
+        ],
+        select: function(info) {
+          // Check if the selected slot overlaps with any booked events
+          var overlapping = calendar.getEvents().some(event => {
+            return (info.start < event.end && info.end > event.start && event.title === 'Booked');
+          });
+          if (overlapping) {
+            alert("This time slot is already booked. Please choose another.");
+            calendar.unselect();
+            return;
+          }
+          selectedSlot = info;
+          selectedSlotText.innerText = "Session from " +
+            info.start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) +
+            " to " +
+            info.end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+          modalOverlay.style.display = 'flex';
+        }
+      });
+
+      calendar.render();
+
+      // Confirm booking: redirect to booking page with slot info in URL parameters
+      confirmBookingBtn.addEventListener('click', function() {
+        var startTime = selectedSlot.start.toISOString();
+        var endTime = selectedSlot.end.toISOString();
+        window.location.href = "booking.html?start=" + encodeURIComponent(startTime) + "&end=" + encodeURIComponent(endTime);
+      });
+
+      cancelBookingBtn.addEventListener('click', function() {
+        modalOverlay.style.display = 'none';
+        calendar.unselect();
+      });
+
+      // Mobile navigation toggle
+      const navIcon = document.querySelector('.nav-icon');
+      const navMenu = document.querySelector('.nav-menu');
+      navIcon.addEventListener('click', () => { navMenu.classList.toggle('active'); });
+    });
+  </script>
+</body>
+</html>

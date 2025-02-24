@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Bookings - Manoved</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .bookings-container {
+      max-width: 800px;
+      margin: 100px auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .booking-item {
+      border-bottom: 1px solid #ddd;
+      padding: 10px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .booking-item:last-child { border-bottom: none; }
+    .booking-actions button {
+      margin-left: 10px;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .booking-actions button.edit { background: #2575fc; color: #fff; }
+    .booking-actions button.delete { background: #ff4d4d; color: #fff; }
+  </style>
+</head>
+<body>
+  <!-- Navigation Menu -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">Manoved</a>
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+        <li class="nav-item"><a href="therapists.html" class="nav-link">Therapists</a></li>
+        <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+        <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="nav-icon"><i class="fas fa-bars"></i></div>
+    </div>
+  </nav>
+
+  <div class="bookings-container">
+    <h2>My Bookings</h2>
+    <div id="bookingsList">
+      <!-- Demo booking items. In production, load from server. -->
+      <div class="booking-item" data-bookingid="1">
+        <div>
+          <strong>Dr. Ananya Sharma</strong><br>
+          09:45 AM - 10:30 AM, March 5, 2025
+        </div>
+        <div class="booking-actions">
+          <button class="edit" onclick="modifyBooking(1)">Edit</button>
+          <button class="delete" onclick="deleteBooking(1)">Delete</button>
+        </div>
+      </div>
+      <!-- More bookings can be added -->
+    </div>
+  </div>
+
+  <script>
+    function modifyBooking(bookingId) {
+      // For demo, redirect to a modify page (not implemented fully here)
+      window.location.href = "modify-booking.html?bookingId=" + bookingId;
+    }
+    async function deleteBooking(bookingId) {
+      if(confirm("Are you sure you want to delete this booking?")) {
+        const response = await fetch('/api/bookings/' + bookingId, { method: 'DELETE' });
+        if(response.ok) {
+          alert("Booking deleted successfully.");
+          location.reload();
+        } else {
+          alert("Error deleting booking.");
+        }
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Therapists - Manoved</title>
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Font Awesome for icons -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <!-- Navigation Menu -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">Manoved</a>
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+        <li class="nav-item"><a href="therapists.html" class="nav-link active">Therapists</a></li>
+        <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+        <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="nav-icon">
+        <i class="fas fa-bars"></i>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Therapist Listing -->
+  <div class="container">
+    <h2 class="page-title">Our Expert Therapists</h2>
+    <div class="therapist-list">
+      <div class="therapist-card">
+        <img src="therapist1.jpg" alt="Therapist Image">
+        <h3>Dr. Ananya Sharma</h3>
+        <p>Specialist in Anxiety & Stress Management</p>
+        <a href="therapist-profile.html?id=1" class="btn">View Profile</a>
+      </div>
+      <div class="therapist-card">
+        <img src="therapist2.jpg" alt="Therapist Image">
+        <h3>Dr. Ravi Mehta</h3>
+        <p>Expert in Relationship & Family Therapy</p>
+        <a href="therapist-profile.html?id=2" class="btn">View Profile</a>
+      </div>
+      <!-- Additional therapist cards can be added similarly -->
+    </div>
+  </div>
+
+  <script>
+    // Toggle navigation menu on mobile devices
+    const navIcon = document.querySelector('.nav-icon');
+    const navMenu = document.querySelector('.nav-menu');
+    navIcon.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+    });
+  </script>
+</body>
+</html>

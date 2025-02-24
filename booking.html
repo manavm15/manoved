@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guest Booking - Manoved</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Font Awesome for icons -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <style>
+    /* Simple form styling */
+    .booking-form {
+      max-width: 500px;
+      margin: 100px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .booking-form h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    .booking-form .input-group {
+      margin-bottom: 15px;
+    }
+    .booking-form label {
+      display: block;
+      margin-bottom: 5px;
+      color: #333;
+    }
+    .booking-form input, .booking-form textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    .booking-form .readonly-field {
+      background: #f0f0f0;
+      padding: 10px;
+      border-radius: 5px;
+      color: #555;
+      margin-bottom: 15px;
+    }
+    .booking-form button {
+      width: 100%;
+      padding: 12px;
+      background: #6a11cb;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .booking-form button:hover {
+      background: #2575fc;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Menu (reuse shared code) -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">Manoved</a>
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+        <li class="nav-item"><a href="therapists.html" class="nav-link">Therapists</a></li>
+        <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+        <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="nav-icon"><i class="fas fa-bars"></i></div>
+    </div>
+  </nav>
+
+  <div class="booking-form">
+    <h2>Book Your Session</h2>
+    <!-- Display Selected Session Time if available -->
+    <div id="selectedSessionDisplay" class="readonly-field" style="display: none;"></div>
+    
+    <form id="guestBookingForm" enctype="multipart/form-data">
+      <!-- Hidden fields to store selected times -->
+      <input type="hidden" id="startTime" name="startTime">
+      <input type="hidden" id="endTime" name="endTime">
+
+      <div class="input-group">
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName" required>
+      </div>
+      <div class="input-group">
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName" required>
+      </div>
+      <div class="input-group">
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" name="dob" required>
+      </div>
+      <div class="input-group">
+        <label for="email">Email Address:</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <div class="input-group">
+        <label for="phone">Phone Number:</label>
+        <input type="tel" id="phone" name="phone" required>
+      </div>
+      <div class="input-group">
+        <label for="attachment">Attachment (Optional):</label>
+        <input type="file" id="attachment" name="attachment">
+      </div>
+      <div class="input-group">
+        <label for="question">Your Question for the Therapist:</label>
+        <textarea id="question" name="question" rows="4" placeholder="Type your question here..."></textarea>
+      </div>
+      <button type="submit">Continue to Payment</button>
+    </form>
+  </div>
+
+  <script>
+    // Parse URL parameters to get selected slot times
+    const urlParams = new URLSearchParams(window.location.search);
+    const start = urlParams.get('start');
+    const end = urlParams.get('end');
+
+    // If start and end exist, set the hidden fields and display the session info
+    if(start && end) {
+      document.getElementById('startTime').value = start;
+      document.getElementById('endTime').value = end;
+
+      const startDate = new Date(start);
+      const endDate = new Date(end);
+      const options = { hour: '2-digit', minute: '2-digit' };
+      const sessionText = "Selected Session: " +
+        startDate.toLocaleDateString() + " from " +
+        startDate.toLocaleTimeString([], options) + " to " +
+        endDate.toLocaleTimeString([], options);
+      document.getElementById('selectedSessionDisplay').innerText = sessionText;
+      document.getElementById('selectedSessionDisplay').style.display = 'block';
+    }
+
+    // On form submit, post the booking data and redirect to payment page.
+    document.getElementById('guestBookingForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      // Demo: post booking details to server (assume endpoint exists)
+      const response = await fetch('/api/bookings', {
+        method: 'POST',
+        body: formData
+      });
+      if(response.ok) {
+        // Redirect to payment page with booking id (simulate booking id)
+        const data = await response.json();
+        window.location.href = "payment.html?bookingId=" + encodeURIComponent(data.bookingId);
+      } else {
+        alert("Error creating booking. Please try again.");
+      }
+    });
+  </script>
+</body>
+</html>

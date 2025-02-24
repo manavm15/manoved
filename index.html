@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - Manoved</title>
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Font Awesome for icons -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <!-- Navigation Menu -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">Manoved</a>
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+        <li class="nav-item"><a href="therapists.html" class="nav-link">Therapists</a></li>
+        <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+        <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+        <li class="nav-item"><a href="login.html" class="nav-link active">Login</a></li>
+        <li class="nav-item"><a href="register.html" class="nav-link">Register</a></li>
+      </ul>
+      <div class="nav-icon">
+        <i class="fas fa-bars"></i>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="background">
+    <div class="login-container">
+      <div class="login-box">
+        <h2>Welcome Back to <span class="brand">Manoved</span></h2>
+        <p class="subtitle">Your journey to inner peace begins here.</p>
+
+        <form id="loginForm">
+          <div class="input-group">
+            <i class="fas fa-envelope"></i>
+            <input type="email" placeholder="Email" required />
+          </div>
+          <div class="input-group">
+            <i class="fas fa-lock"></i>
+            <input type="password" placeholder="Password" required />
+          </div>
+          <button type="submit" class="btn">Login</button>
+        </form>
+
+        <p class="register-link">New here? <a href="register.html">Sign up</a></p>
+        <p class="trust-message">Your privacy is our priority. Safe, secure, and confidential.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Toggle the navigation menu on mobile devices
+    const navIcon = document.querySelector('.nav-icon');
+    const navMenu = document.querySelector('.nav-menu');
+
+    navIcon.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+    });
+  </script>
+</body>
+</html>

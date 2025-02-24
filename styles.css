@@ -1,0 +1,221 @@
+/* Reset & Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  body {
+    font-family: 'Arial', sans-serif;
+    background: #f0f4f8;
+    line-height: 1.6;
+  }
+  
+  /* Navigation Bar */
+  .navbar {
+    background: #2575fc;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+  }
+  .nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .nav-logo {
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  .nav-menu {
+    list-style: none;
+    display: flex;
+  }
+  .nav-menu.active {
+    display: block;
+  }
+  .nav-item {
+    margin-left: 20px;
+  }
+  .nav-link {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+  }
+  .nav-link:hover,
+  .nav-link.active {
+    color: #ffcc00;
+  }
+  .nav-icon {
+    display: none;
+    color: #fff;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+  @media (max-width: 768px) {
+    .nav-menu {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      background: #2575fc;
+    }
+    .nav-item {
+      margin: 10px 0;
+      text-align: center;
+    }
+    .nav-icon {
+      display: block;
+    }
+  }
+  
+  /* Container */
+  .container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 100px auto 20px;
+    padding: 20px;
+  }
+  
+  /* Page Title */
+  .page-title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 30px;
+    color: #333;
+  }
+  
+  /* Therapist Listing */
+  .therapist-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .therapist-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    text-align: center;
+    transition: transform 0.3s;
+  }
+  .therapist-card:hover {
+    transform: translateY(-5px);
+  }
+  .therapist-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 15px;
+  }
+  .therapist-card h3 {
+    font-size: 1.2rem;
+    color: #333;
+  }
+  .therapist-card p {
+    color: #666;
+    margin-bottom: 15px;
+  }
+  .btn {
+    display: inline-block;
+    background: #6a11cb;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background 0.3s;
+  }
+  .btn:hover {
+    background: #2575fc;
+  }
+  
+  /* Therapist Profile */
+  .profile-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+  .profile-header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+  .profile-img {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+  .profile-details {
+    flex: 1;
+  }
+  .profile-details h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  .profile-details p {
+    color: #666;
+    margin-bottom: 8px;
+  }
+  
+  /* Profile Calendar */
+  .profile-calendar {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+  .calendar-dropdown select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+  
+  /* Booking Form */
+  .booking-container {
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  .booking-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  .booking-container form .input-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  .booking-container form .input-group label {
+    margin-bottom: 5px;
+    color: #333;
+    font-size: 1rem;
+  }
+  .booking-container form .input-group input,
+  .booking-container form .input-group select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+  
