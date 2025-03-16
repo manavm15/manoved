@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Discover Your Ideal Therapy - Manoved Quiz</title>
+  <!-- Font Awesome for icons -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <style>
+    /* Basic Reset & Globals */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f7f9fc;
+      color: #333;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    h1, h2, p {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    /* Navigation (optional if used standalone) */
+    .navbar {
+      background: #2575fc;
+      padding: 1rem;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .nav-logo {
+      color: #fff;
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+    .nav-menu {
+      list-style: none;
+      display: flex;
+    }
+    .nav-item {
+      margin-left: 20px;
+    }
+    .nav-link {
+      color: #fff;
+      font-size: 1rem;
+      transition: color 0.3s;
+    }
+    .nav-link:hover {
+      color: #ffcc00;
+    }
+    .nav-icon {
+      display: none;
+      color: #fff;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    @media (max-width: 768px) {
+      .nav-menu {
+        display: none;
+        flex-direction: column;
+        background: #2575fc;
+        width: 100%;
+      }
+      .nav-menu.active {
+        display: flex;
+      }
+      .nav-item {
+        margin: 10px 0;
+        text-align: center;
+      }
+      .nav-icon {
+        display: block;
+      }
+    }
+    
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      color: #fff;
+      padding: 150px 20px 100px;
+      text-align: center;
+      margin-top: 80px; /* space for fixed nav */
+      position: relative;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.3);
+      z-index: 0;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+    .hero-content h1 {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+    }
+    .hero-content p {
+      font-size: 1.5rem;
+      margin-bottom: 30px;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero-content button {
+      padding: 12px 24px;
+      background: #ffcc00;
+      border: none;
+      border-radius: 5px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #2575fc;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .hero-content button:hover {
+      background: #e6b800;
+    }
+    
+    /* Quiz Container */
+    .quiz-container {
+      max-width: 600px;
+      margin: 40px auto;
+      background: #fff;
+      border-radius: 8px;
+      padding: 30px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    .quiz-container h1 {
+      color: #2575fc;
+      margin-bottom: 20px;
+    }
+    /* Progress Bar */
+    .progress-bar {
+      width: 100%;
+      background: #e0e0e0;
+      height: 8px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    .progress {
+      width: 0%;
+      height: 100%;
+      background: #2575fc;
+      transition: width 0.5s ease-in-out;
+    }
+    /* Question Styles */
+    .question {
+      display: none;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    .question.active {
+      display: block;
+    }
+    .question p {
+      font-size: 1.2rem;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+    .options label {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 1rem;
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .options label:hover {
+      background: #e6f0ff;
+      border-color: #2575fc;
+    }
+    .options input[type="radio"] {
+      margin-right: 10px;
+    }
+    .button-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      background: #2575fc;
+      border: none;
+      color: #fff;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+      margin: 0 10px;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #1e5bb8;
+    }
+    /* Result Display */
+    .result {
+      text-align: center;
+      font-size: 1.2rem;
+      margin-top: 20px;
+      padding: 20px;
+      background: #e6f0ff;
+      border-radius: 5px;
+      border: 1px solid #2575fc;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Recommended Therapists Section */
+    #recommendedSection {
+      display: none;
+      margin-top: 40px;
+    }
+    #recommendedSection h2 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      color: #2575fc;
+      text-align: center;
+    }
+    .therapist-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .therapist-card {
+      background: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
+    .therapist-card:hover {
+      transform: translateY(-5px);
+    }
+    .therapist-card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    .therapist-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 5px;
+      color: #333;
+    }
+    .therapist-card .btn {
+      display: inline-block;
+      background: #6a11cb;
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 5px;
+      transition: background 0.3s;
+      font-size: 0.9rem;
+    }
+    .therapist-card .btn:hover {
+      background: #2575fc;
+    }
+    
+    /* Additional Fun Animations */
+    .bounce {
+      animation: bounce 0.6s;
+    }
+    @keyframes bounce {
+      0% { transform: translateY(0); }
+      30% { transform: translateY(-15px); }
+      50% { transform: translateY(0); }
+      70% { transform: translateY(-7px); }
+      100% { transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">Manoved</a>
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+        <li class="nav-item"><a href="therapists.html" class="nav-link">Therapists</a></li>
+        <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+        <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+        <li class="nav-item"><a href="login.html" class="nav-link">Login</a></li>
+        <li class="nav-item"><a href="register.html" class="nav-link">Register</a></li>
+      </ul>
+      <div class="nav-icon">
+        <i class="fas fa-bars"></i>
+      </div>
+    </div>
+  </nav>
+  
+  <!-- Hero Section -->
+  <header class="hero">
+    <div class="hero-content">
+      <h1>Discover Your Ideal Therapy</h1>
+      <p>Play our fun quiz to uncover the best approach for your mental well-being!</p>
+      <button onclick="document.getElementById('quizSection').scrollIntoView({ behavior: 'smooth' });">
+        Take the Quiz
+      </button>
+    </div>
+  </header>
+  
+  <!-- Quiz Section -->
+  <section id="quizSection">
+    <div class="quiz-container">
+      <h1>Find Your Ideal Therapy</h1>
+      <!-- Progress Bar -->
+      <div class="progress-bar">
+        <div id="progress" class="progress"></div>
+      </div>
+      
+      <!-- Question 1 -->
+      <div class="question active" id="question1">
+        <p>1. On a typical day, how do you feel?</p>
+        <div class="options">
+          <label><input type="radio" name="q1" value="calm" required> Calm and in control</label>
+          <label><input type="radio" name="q1" value="anxious"> Overwhelmed and anxious</label>
+          <label><input type="radio" name="q1" value="sad"> Low or down</label>
+          <label><input type="radio" name="q1" value="stressed"> Stressed and burnt out</label>
+          <label><input type="radio" name="q1" value="energetic"> Energetic but tense</label>
+        </div>
+        <div class="button-container">
+          <button onclick="nextQuestion(1)" class="bounce">Next</button>
+        </div>
+      </div>
+      
+      <!-- Question 2 -->
+      <div class="question" id="question2">
+        <p>2. When you need a break, what do you enjoy doing the most?</p>
+        <div class="options">
+          <label><input type="radio" name="q2" value="music" required> Listening to music</label>
+          <label><input type="radio" name="q2" value="meditation"> Meditating or doing yoga</label>
+          <label><input type="radio" name="q2" value="chatting"> Chatting with a friend</label>
+          <label><input type="radio" name="q2" value="nature"> A walk in nature</label>
+          <label><input type="radio" name="q2" value="reading"> Reading a good book</label>
+        </div>
+        <div class="button-container">
+          <button onclick="prevQuestion(2)" class="bounce">Previous</button>
+          <button onclick="nextQuestion(2)" class="bounce">Next</button>
+        </div>
+      </div>
+      
+      <!-- Question 3 -->
+      <div class="question" id="question3">
+        <p>3. What would make you feel more balanced?</p>
+        <div class="options">
+          <label><input type="radio" name="q3" value="structure" required> More structure and practical strategies</label>
+          <label><input type="radio" name="q3" value="expression"> A space to express your feelings</label>
+          <label><input type="radio" name="q3" value="connection"> Deep connections with others</label>
+          <label><input type="radio" name="q3" value="reflection"> Time for self-reflection and mindfulness</label>
+          <label><input type="radio" name="q3" value="creativity"> Creative outlets and inspiration</label>
+        </div>
+        <div class="button-container">
+          <button onclick="prevQuestion(3)" class="bounce">Previous</button>
+          <button onclick="nextQuestion(3)" class="bounce">Next</button>
+        </div>
+      </div>
+      
+      <!-- Question 4 -->
+      <div class="question" id="question4">
+        <p>4. What quality do you value most in a therapist?</p>
+        <div class="options">
+          <label><input type="radio" name="q4" value="empathy" required> Genuine empathy and understanding</label>
+          <label><input type="radio" name="q4" value="expertise"> Proven expertise and guidance</label>
+          <label><input type="radio" name="q4" value="privacy"> Strong privacy and confidentiality</label>
+          <label><input type="radio" name="q4" value="custom"> A personalized, tailored approach</label>
+          <label><input type="radio" name="q4" value="support"> A supportive and uplifting environment</label>
+        </div>
+        <div class="button-container">
+          <button onclick="prevQuestion(4)" class="bounce">Previous</button>
+          <button onclick="nextQuestion(4)" class="bounce">Next</button>
+        </div>
+      </div>
+      
+      <!-- Question 5 -->
+      <div class="question" id="question5">
+        <p>5. Which word best describes your personality?</p>
+        <div class="options">
+          <label><input type="radio" name="q5" value="introvert" required> Reflective</label>
+          <label><input type="radio" name="q5" value="extrovert"> Outgoing</label>
+          <label><input type="radio" name="q5" value="balanced"> Balanced</label>
+        </div>
+        <div class="button-container">
+          <button onclick="prevQuestion(5)" class="bounce">Previous</button>
+          <button onclick="submitQuiz()" class="bounce">Submit</button>
+        </div>
+      </div>
+      
+      <!-- Result Display -->
+      <div id="result" class="result" style="display: none;"></div>
+      
+      <!-- Recommended Therapists Section -->
+      <div id="recommendedSection" style="display: none;"></div>
+    </div>
+  </section>
+  
+  <script>
+    let currentQuestion = 1;
+    const totalQuestions = 5;
+    
+    function updateProgress() {
+      const progressPercent = ((currentQuestion - 1) / totalQuestions) * 100;
+      document.getElementById('progress').style.width = progressPercent + '%';
+    }
+    
+    function nextQuestion(q) {
+      document.getElementById('question' + q).classList.remove('active');
+      currentQuestion = q + 1;
+      document.getElementById('question' + (q + 1)).classList.add('active');
+      updateProgress();
+    }
+    
+    function prevQuestion(q) {
+      document.getElementById('question' + q).classList.remove('active');
+      currentQuestion = q - 1;
+      document.getElementById('question' + (q - 1)).classList.add('active');
+      updateProgress();
+    }
+    
+    function submitQuiz() {
+      // Collect responses from all questions
+      const q1 = document.querySelector('input[name="q1"]:checked').value;
+      const q2 = document.querySelector('input[name="q2"]:checked').value;
+      const q3 = document.querySelector('input[name="q3"]:checked').value;
+      const q4 = document.querySelector('input[name="q4"]:checked').value;
+      const q5 = document.querySelector('input[name="q5"]:checked').value;
+      
+      // Use friendly analysis logic to determine a therapy recommendation
+      let recommendation = "";
+      let recommendedHTML = "";
+      
+      // We'll decide based on q1 (mood) with friendly language
+      if(q1 === "anxious") {
+        recommendation = "It seems you often feel overwhelmed. A practical, structured approach like Cognitive Behavioral Therapy (CBT) might help you manage anxiety.";
+        recommendedHTML = `
+          <h2>Therapists for Anxiety & Overwhelm</h2>
+          <div class="therapist-list">
+            <div class="therapist-card">
+              <img src="therapist1.jpg" alt="Dr. Aditi Sharma">
+              <h3>Dr. Aditi Sharma</h3>
+              <p>CBT, ACT, Mindfulness</p>
+              <a href="therapist-profile.html?id=1" class="btn">Book Now</a>
+            </div>
+            <div class="therapist-card">
+              <img src="therapist7.jpg" alt="Vikram Iyer">
+              <h3>Vikram Iyer</h3>
+              <p>CBT, DBT, Psychodynamic</p>
+              <a href="therapist-profile.html?id=7" class="btn">Book Now</a>
+            </div>
+          </div>
+        `;
+      } else if(q1 === "depression") {
+        recommendation = "Feeling low can be tough. A warm, empathetic approach using mindfulness and gentle cognitive strategies could lift your spirits.";
+        recommendedHTML = `
+          <h2>Therapists for Depression & Low Mood</h2>
+          <div class="therapist-list">
+            <div class="therapist-card">
+              <img src="therapist3.jpg" alt="Dr. Rohan Desai">
+              <h3>Dr. Rohan Desai</h3>
+              <p>CBT, Trauma-Informed</p>
+              <a href="therapist-profile.html?id=3" class="btn">Book Now</a>
+            </div>
+            <div class="therapist-card">
+              <img src="therapist10.jpg" alt="Dr. Anil Nair">
+              <h3>Dr. Anil Nair</h3>
+              <p>MBCT, Somatic Therapy</p>
+              <a href="therapist-profile.html?id=10" class="btn">Book Now</a>
+            </div>
+          </div>
+        `;
+      } else if(q1 === "sad") {
+        recommendation = "Your feelings matter. A therapy that focuses on gentle emotional exploration, like Mindfulness-Based or Humanistic Therapy, might be best.";
+        recommendedHTML = `
+          <h2>Therapists for Emotional Support</h2>
+          <div class="therapist-list">
+            <div class="therapist-card">
+              <img src="therapist2.jpg" alt="Akash Menon">
+              <h3>Akash Menon</h3>
+              <p>Humanistic Therapy</p>
+              <a href="therapist-profile.html?id=2" class="btn">Book Now</a>
+            </div>
+            <div class="therapist-card">
+              <img src="therapist4.jpg" alt="Priya Joshi">
+              <h3>Priya Joshi</h3>
+              <p>Person-Centered Therapy</p>
+              <a href="therapist-profile.html?id=4" class="btn">Book Now</a>
+            </div>
+          </div>
+        `;
+      } else if(q1 === "stressed") {
+        recommendation = "Stress and burnout can take a toll. A therapist who offers stress management techniques and mindfulness can help you restore balance.";
+        recommendedHTML = `
+          <h2>Therapists for Stress Relief</h2>
+          <div class="therapist-list">
+            <div class="therapist-card">
+              <img src="therapist9.jpg" alt="Arjun Rao">
+              <h3>Arjun Rao</h3>
+              <p>REBT, Eclectic Therapy</p>
+              <a href="therapist-profile.html?id=9" class="btn">Book Now</a>
+            </div>
+            <div class="therapist-card">
+              <img src="therapist7.jpg" alt="Vikram Iyer">
+              <h3>Vikram Iyer</h3>
+              <p>CBT, DBT</p>
+              <a href="therapist-profile.html?id=7" class="btn">Book Now</a>
+            </div>
+          </div>
+        `;
+      } else if(q1 === "energetic") {
+        recommendation = "Even if you feel energetic, sometimes a little guidance can help maintain that balance. A tailored, personalized approach could be ideal.";
+        recommendedHTML = `
+          <h2>General Wellness Therapists</h2>
+          <div class="therapist-list">
+            <div class="therapist-card">
+              <img src="therapist1.jpg" alt="Dr. Aditi Sharma">
+              <h3>Dr. Aditi Sharma</h3>
+              <p>CBT, Mindfulness</p>
+              <a href="therapist-profile.html?id=1" class="btn">Book Now</a>
+            </div>
+            <div class="therapist-card">
+              <img src="therapist2.jpg" alt="Akash Menon">
+              <h3>Akash Menon</h3>
+              <p>Humanistic Therapy</p>
+              <a href="therapist-profile.html?id=2" class="btn">Book Now</a>
+            </div>
+          </div>
+        `;
+      } else {
+        recommendation = "Based on your answers, a general mental health therapist might be a good starting point.";
+        recommendedHTML = `
+          <h2>Recommended Therapists</h2>
+          <div class="therapist-list">
+            <div class="therapist-card">
+              <img src="therapist1.jpg" alt="Dr. Aditi Sharma">
+              <h3>Dr. Aditi Sharma</h3>
+              <p>CBT, Mindfulness</p>
+              <a href="therapist-profile.html?id=1" class="btn">Book Now</a>
+            </div>
+            <div class="therapist-card">
+              <img src="therapist2.jpg" alt="Akash Menon">
+              <h3>Akash Menon</h3>
+              <p>Humanistic Therapy</p>
+              <a href="therapist-profile.html?id=2" class="btn">Book Now</a>
+            </div>
+          </div>
+        `;
+      }
+      
+      // Show result and recommendation
+      document.getElementById('result').innerText = recommendation;
+      document.getElementById('result').style.display = "block";
+      
+      // Hide all quiz questions
+      document.querySelectorAll('.question').forEach(q => q.classList.remove('active'));
+      document.getElementById('progress').style.width = "100%";
+      
+      // Show Recommended Therapists Section
+      const recSection = document.getElementById('recommendedSection');
+      recSection.innerHTML = recommendedHTML;
+      recSection.style.display = "block";
+    }
+    
+    // Initialize progress bar
+    function updateProgress() {
+      const progressPercent = ((currentQuestion - 1) / totalQuestions) * 100;
+      document.getElementById('progress').style.width = progressPercent + '%';
+    }
+    updateProgress();
+  </script>
+</body>
+</html>

@@ -1,12 +1,224 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Therapists - Manoved</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css">
   <!-- Font Awesome for icons -->
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <style>
+    /* --------------------- */
+    /* Basic Reset & Globals */
+    /* --------------------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f7f9fc;
+      color: #333;
+      line-height: 1.6;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    /* --------------------- */
+    /* Navigation */
+    /* --------------------- */
+    .navbar {
+      background: #2575fc;
+      padding: 1rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+    }
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .nav-logo {
+      color: #fff;
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+    .nav-menu {
+      list-style: none;
+      display: flex;
+    }
+    .nav-item {
+      margin-left: 20px;
+    }
+    .nav-link {
+      color: #fff;
+      font-size: 1rem;
+      transition: color 0.3s;
+    }
+    .nav-link:hover, .nav-link.active {
+      color: #ffcc00;
+    }
+    .nav-icon {
+      display: none;
+      color: #fff;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    @media (max-width: 768px) {
+      .nav-menu {
+        display: none;
+        flex-direction: column;
+        background: #2575fc;
+        width: 100%;
+      }
+      .nav-menu.active {
+        display: flex;
+      }
+      .nav-item {
+        margin: 10px 0;
+        text-align: center;
+      }
+      .nav-icon {
+        display: block;
+      }
+    }
+    /* --------------------- */
+    /* Container */
+    /* --------------------- */
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 100px auto 40px; /* leave space for fixed nav */
+      padding: 20px;
+    }
+    .page-title {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #2575fc;
+    }
+    /* --------------------- */
+    /* Filter Bar */
+    /* --------------------- */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin-bottom: 40px;
+    }
+    .filter-bar input[type="text"],
+    .filter-bar select {
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      min-width: 200px;
+    }
+    .filter-bar button {
+      padding: 10px 15px;
+      font-size: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background: #fff;
+      cursor: pointer;
+      transition: background 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .filter-bar button:hover {
+      background: #e6e6e6;
+    }
+    /* --------------------- */
+    /* Therapist List */
+    /* --------------------- */
+    .therapist-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .therapist-card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+      position: relative;
+    }
+    .therapist-card:hover {
+      transform: translateY(-5px);
+    }
+    .therapist-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+    .therapist-card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+      color: #333;
+    }
+    .therapist-card p {
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+      color: #555;
+      text-align: left;
+    }
+    .therapist-card .btn {
+      display: inline-block;
+      background: #6a11cb;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 5px;
+      transition: background 0.3s;
+    }
+    .therapist-card .btn:hover {
+      background: #2575fc;
+    }
+    /* --------------------- */
+    /* Hover Icon Below Card */
+    /* --------------------- */
+    .hover-icon {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.3s, transform 0.3s;
+      text-align: center;
+      margin-top: 10px;
+    }
+    .therapist-card:hover .hover-icon {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* Specific hover icons (unique for each step if needed) */
+    #step1-hover i {
+      font-size: 2.5rem;
+      color: #ffcc00;
+    }
+    #step2-hover i {
+      font-size: 2.5rem;
+      color: #ffcc00;
+    }
+    #step3-hover i {
+      font-size: 2.5rem;
+      color: #ffcc00;
+    }
+    #step4-hover i {
+      font-size: 2.5rem;
+      color: #ffcc00;
+    }
+  </style>
 </head>
 <body>
   <!-- Navigation Menu -->
@@ -18,6 +230,8 @@
         <li class="nav-item"><a href="therapists.html" class="nav-link active">Therapists</a></li>
         <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
         <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+        <li class="nav-item"><a href="login.html" class="nav-link">Login</a></li>
+        <li class="nav-item"><a href="login.html" class="nav-link">Register</a></li>
       </ul>
       <div class="nav-icon">
         <i class="fas fa-bars"></i>
@@ -25,32 +239,296 @@
     </div>
   </nav>
 
-  <!-- Therapist Listing -->
+  <!-- Main Container -->
   <div class="container">
     <h2 class="page-title">Our Expert Therapists</h2>
+    
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+      <input type="text" id="filterName" placeholder="Search by name">
+      <select id="filterLanguage">
+        <option value="">All Languages</option>
+        <option value="english">English</option>
+        <option value="hindi">Hindi</option>
+        <option value="bengali">Bengali</option>
+        <option value="tamil">Tamil</option>
+        <option value="malayalam">Malayalam</option>
+        <option value="kannada">Kannada</option>
+        <option value="telugu">Telugu</option>
+        <option value="gujarati">Gujarati</option>
+        <option value="marathi">Marathi</option>
+        <option value="punjabi">Punjabi</option>
+        <option value="urdu">Urdu</option>
+        <option value="assamese">Assamese</option>
+      </select>
+      <select id="filterRegion">
+        <option value="">All Regions</option>
+        <option value="mumbai">Mumbai</option>
+        <option value="chennai">Chennai</option>
+        <option value="bangalore">Bangalore</option>
+        <option value="pune">Pune</option>
+        <option value="delhi">Delhi</option>
+        <option value="hyderabad">Hyderabad</option>
+        <option value="kolkata">Kolkata</option>
+        <option value="chandigarh">Chandigarh</option>
+        <option value="ahmedabad">Ahmedabad</option>
+      </select>
+      <select id="filterStatus">
+        <option value="">All</option>
+        <option value="online">Online</option>
+        <option value="offline">Offline</option>
+      </select>
+      <button id="resetFilter"><i class="fas fa-sync-alt"></i> Reset Filters</button>
+    </div>
+    
+    <!-- Therapist List -->
     <div class="therapist-list">
-      <div class="therapist-card">
-        <img src="therapist1.jpg" alt="Therapist Image">
-        <h3>Dr. Ananya Sharma</h3>
-        <p>Specialist in Anxiety & Stress Management</p>
-        <a href="therapist-profile.html?id=1" class="btn">View Profile</a>
+      <!-- Profile 1 – Dr. Aditi Sharma -->
+      <div class="therapist-card"
+           data-name="Dr. Aditi Sharma"
+           data-language="english,hindi,bengali"
+           data-region="mumbai"
+           data-status="online">
+        <img src="therapist1.jpg" alt="Dr. Aditi Sharma">
+        <h3>Dr. Aditi Sharma</h3>
+        <p><strong>Further sessions @ INR 1200</strong></p>
+        <p><strong>Language:</strong> English, Hindi, Bengali</p>
+        <p><strong>Concerns:</strong> Anxiety, Depression, Relationship Issues, Career Stress, Sleep Disorders, Self-Esteem Issues, Grief Counseling, Anger Management</p>
+        <p><strong>Basic Details:</strong> Clinical Psychologist, Age: 28, Female, She/Her</p>
+        <p><strong>Experience:</strong> 3 years</p>
+        <p><strong>Therapy:</strong> CBT, ACT, Mindfulness-Based Therapy</p>
+        <a href="therapist-profile.html?id=1" class="btn">Book Now</a>
+        <div class="hover-icon" id="step1-hover">
+          <i class="fas fa-sign-in-alt"></i>
+        </div>
       </div>
-      <div class="therapist-card">
-        <img src="therapist2.jpg" alt="Therapist Image">
-        <h3>Dr. Ravi Mehta</h3>
-        <p>Expert in Relationship & Family Therapy</p>
-        <a href="therapist-profile.html?id=2" class="btn">View Profile</a>
+      <!-- Profile 2 – Akash Menon -->
+      <div class="therapist-card"
+           data-name="Akash Menon"
+           data-language="english,tamil,malayalam"
+           data-region="chennai"
+           data-status="offline">
+        <img src="therapist2.jpg" alt="Akash Menon">
+        <h3>Akash Menon</h3>
+        <p><strong>Further sessions @ INR 900</strong></p>
+        <p><strong>Language:</strong> English, Tamil, Malayalam</p>
+        <p><strong>Concerns:</strong> Anxiety, Trauma & PTSD, Work-Life Balance, Childhood Trauma, Emotional Regulation, Social Anxiety, Procrastination, Overthinking</p>
+        <p><strong>Basic Details:</strong> Counselling Psychologist, Age: 25, Non-Binary, They/Them</p>
+        <p><strong>Experience:</strong> 2 years</p>
+        <p><strong>Therapy:</strong> CBT, DBT, Humanistic Therapy</p>
+        <a href="therapist-profile.html?id=2" class="btn">Book Now</a>
+        <div class="hover-icon" id="step2-hover">
+          <i class="fas fa-lightbulb"></i>
+        </div>
       </div>
-      <!-- Additional therapist cards can be added similarly -->
+      <!-- Profile 3 – Dr. Rohan Desai -->
+      <div class="therapist-card"
+           data-name="Dr. Rohan Desai"
+           data-language="english,kannada,telugu"
+           data-region="bangalore"
+           data-status="online">
+        <img src="therapist3.jpg" alt="Dr. Rohan Desai">
+        <h3>Dr. Rohan Desai</h3>
+        <p><strong>Further sessions @ INR 1500</strong></p>
+        <p><strong>Language:</strong> English, Kannada, Telugu</p>
+        <p><strong>Concerns:</strong> Anxiety, Depression, Workplace Burnout, Phobias, Parenting Stress, LGBTQIA+ Issues, OCD, Perfectionism</p>
+        <p><strong>Basic Details:</strong> Psychotherapist, Age: 31, Male, He/Him</p>
+        <p><strong>Experience:</strong> 5 years</p>
+        <p><strong>Therapy:</strong> CBT, REBT, Trauma-Informed Therapy</p>
+        <a href="therapist-profile.html?id=3" class="btn">Book Now</a>
+        <div class="hover-icon" id="step3-hover">
+          <i class="fas fa-clock"></i>
+        </div>
+      </div>
+      <!-- Profile 4 – Priya Joshi -->
+      <div class="therapist-card"
+           data-name="Priya Joshi"
+           data-language="english,gujarati,marathi"
+           data-region="pune"
+           data-status="online">
+        <img src="therapist4.jpg" alt="Priya Joshi">
+        <h3>Priya Joshi</h3>
+        <p><strong>Further sessions @ INR 1000</strong></p>
+        <p><strong>Language:</strong> English, Gujarati, Marathi</p>
+        <p><strong>Concerns:</strong> Anxiety, Depression, Body Image Issues, Family Conflicts, Workplace Stress, ADHD, Panic Attacks, Overthinking</p>
+        <p><strong>Basic Details:</strong> Licensed Mental Health Counselor, Age: 27, Female, She/Her</p>
+        <p><strong>Experience:</strong> 4 years</p>
+        <p><strong>Therapy:</strong> CBT, Person-Centered Therapy, Motivational Interviewing</p>
+        <a href="therapist-profile.html?id=4" class="btn">Book Now</a>
+        <div class="hover-icon" id="step1-hover">
+          <i class="fas fa-sign-in-alt"></i>
+        </div>
+      </div>
+      <!-- Profile 5 – Dr. Karan Malhotra -->
+      <div class="therapist-card"
+           data-name="Dr. Karan Malhotra"
+           data-language="english,hindi,punjabi"
+           data-region="delhi"
+           data-status="offline">
+        <img src="therapist5.jpg" alt="Dr. Karan Malhotra">
+        <h3>Dr. Karan Malhotra</h3>
+        <p><strong>Further sessions @ INR 1100</strong></p>
+        <p><strong>Language:</strong> English, Hindi, Punjabi</p>
+        <p><strong>Concerns:</strong> Depression, Bipolar Disorder, Stress Management, OCD, Relationship Counseling, Postpartum Depression, Social Anxiety, Sleep Disorders</p>
+        <p><strong>Basic Details:</strong> Clinical Psychologist, Age: 30, Male, He/Him</p>
+        <p><strong>Experience:</strong> 6 years</p>
+        <p><strong>Therapy:</strong> CBT, DBT, Holistic Therapy</p>
+        <a href="therapist-profile.html?id=5" class="btn">Book Now</a>
+        <div class="hover-icon" id="step2-hover">
+          <i class="fas fa-lightbulb"></i>
+        </div>
+      </div>
+      <!-- Profile 6 – Sana Khan -->
+      <div class="therapist-card"
+           data-name="Sana Khan"
+           data-language="english,hindi,urdu"
+           data-region="hyderabad"
+           data-status="online">
+        <img src="therapist6.jpg" alt="Sana Khan">
+        <h3>Sana Khan</h3>
+        <p><strong>Further sessions @ INR 950</strong></p>
+        <p><strong>Language:</strong> English, Hindi, Urdu</p>
+        <p><strong>Concerns:</strong> Work-Life Balance, Phobias, Childhood Trauma, Emotional Regulation, Anxiety, Grief, Self-Esteem Issues, Burnout</p>
+        <p><strong>Basic Details:</strong> Psychotherapist, Age: 26, Female, She/Her</p>
+        <p><strong>Experience:</strong> 2.5 years</p>
+        <p><strong>Therapy:</strong> REBT, Psychoanalysis, Eclectic Therapy</p>
+        <a href="therapist-profile.html?id=6" class="btn">Book Now</a>
+        <div class="hover-icon" id="step3-hover">
+          <i class="fas fa-clock"></i>
+        </div>
+      </div>
+      <!-- Profile 7 – Vikram Iyer -->
+      <div class="therapist-card"
+           data-name="Vikram Iyer"
+           data-language="english,hindi,tamil"
+           data-region="kolkata"
+           data-status="online">
+        <img src="therapist7.jpg" alt="Vikram Iyer">
+        <h3>Vikram Iyer</h3>
+        <p><strong>Further sessions @ INR 1300</strong></p>
+        <p><strong>Language:</strong> English, Hindi, Tamil</p>
+        <p><strong>Concerns:</strong> Anxiety, Depression, Career Stress, Relationship Issues, Panic Attacks, ADHD, OCD, Sleep Disorders</p>
+        <p><strong>Basic Details:</strong> Cognitive Behavioral Therapist, Age: 29, Non-Binary, They/Them</p>
+        <p><strong>Experience:</strong> 5 years</p>
+        <p><strong>Therapy:</strong> CBT, DBT, Psychodynamic Therapy</p>
+        <a href="therapist-profile.html?id=7" class="btn">Book Now</a>
+        <div class="hover-icon" id="step4-hover">
+          <i class="fas fa-video"></i>
+        </div>
+      </div>
+      <!-- Profile 8 – Dr. Sreemoyee Basu -->
+      <div class="therapist-card"
+           data-name="Dr. Sreemoyee Basu"
+           data-language="english,bengali,assamese"
+           data-region="chandigarh"
+           data-status="offline">
+        <img src="therapist8.jpg" alt="Dr. Sreemoyee Basu">
+        <h3>Dr. Sreemoyee Basu</h3>
+        <p><strong>Further sessions @ INR 1400</strong></p>
+        <p><strong>Language:</strong> English, Bengali, Assamese</p>
+        <p><strong>Concerns:</strong> Depression, Trauma & PTSD, Grief, LGBTQIA+ Issues, Anxiety, Overthinking, Perfectionism, Relationship Counseling</p>
+        <p><strong>Basic Details:</strong> Licensed Clinical Social Worker, Age: 32, Female, She/Her</p>
+        <p><strong>Experience:</strong> 7 years</p>
+        <p><strong>Therapy:</strong> CBT, Narrative Therapy, Gestalt Therapy</p>
+        <a href="therapist-profile.html?id=8" class="btn">Book Now</a>
+        <div class="hover-icon" id="step1-hover">
+          <i class="fas fa-sign-in-alt"></i>
+        </div>
+      </div>
+      <!-- Profile 9 – Arjun Rao -->
+      <div class="therapist-card"
+           data-name="Arjun Rao"
+           data-language="english,telugu,kannada"
+           data-region="ahmedabad"
+           data-status="online">
+        <img src="therapist9.jpg" alt="Arjun Rao">
+        <h3>Arjun Rao</h3>
+        <p><strong>Further sessions @ INR 850</strong></p>
+        <p><strong>Language:</strong> English, Telugu, Kannada</p>
+        <p><strong>Concerns:</strong> Anxiety, Depression, Stress Management, Family Therapy, Childhood Trauma, Body Dysmorphia, Self-Harm, Workplace Conflict</p>
+        <p><strong>Basic Details:</strong> Psychotherapist, Age: 24, Male, He/Him</p>
+        <p><strong>Experience:</strong> 2 years</p>
+        <p><strong>Therapy:</strong> CBT, REBT, Eclectic Therapy</p>
+        <a href="therapist-profile.html?id=9" class="btn">Book Now</a>
+        <div class="hover-icon" id="step2-hover">
+          <i class="fas fa-lightbulb"></i>
+        </div>
+      </div>
+      <!-- Profile 10 – Dr. Anil Nair -->
+      <div class="therapist-card"
+           data-name="Dr. Anil Nair"
+           data-language="english,malayalam,tamil"
+           data-region="mumbai"
+           data-status="offline">
+        <img src="therapist10.jpg" alt="Dr. Anil Nair">
+        <h3>Dr. Anil Nair</h3>
+        <p><strong>Further sessions @ INR 1250</strong></p>
+        <p><strong>Language:</strong> English, Malayalam, Tamil</p>
+        <p><strong>Concerns:</strong> Depression, Anxiety, Trauma & PTSD, Burnout, Sleep Disorders, Emotional Regulation, Grief Counseling, OCD</p>
+        <p><strong>Basic Details:</strong> Licensed Therapist, Age: 35, Male, He/Him</p>
+        <p><strong>Experience:</strong> 10 years</p>
+        <p><strong>Therapy:</strong> CBT, Mindfulness-Based Cognitive Therapy, Somatic Therapy</p>
+        <a href="therapist-profile.html?id=10" class="btn">Book Now</a>
+        <div class="hover-icon" id="step3-hover">
+          <i class="fas fa-clock"></i>
+        </div>
+      </div>
     </div>
   </div>
 
   <script>
-    // Toggle navigation menu on mobile devices
+    // Mobile navigation toggle
     const navIcon = document.querySelector('.nav-icon');
     const navMenu = document.querySelector('.nav-menu');
     navIcon.addEventListener('click', () => {
       navMenu.classList.toggle('active');
+    });
+
+    // Filter functionality
+    const filterName = document.getElementById('filterName');
+    const filterLanguage = document.getElementById('filterLanguage');
+    const filterRegion = document.getElementById('filterRegion');
+    const filterStatus = document.getElementById('filterStatus');
+    const resetFilter = document.getElementById('resetFilter');
+    const therapistCards = document.querySelectorAll('.therapist-card');
+
+    function filterTherapists() {
+      const nameValue = filterName.value.toLowerCase();
+      const languageValue = filterLanguage.value.toLowerCase();
+      const regionValue = filterRegion.value.toLowerCase();
+      const statusValue = filterStatus.value.toLowerCase();
+
+      therapistCards.forEach(card => {
+        const name = card.getAttribute('data-name').toLowerCase();
+        const languages = card.getAttribute('data-language').toLowerCase();
+        const region = card.getAttribute('data-region').toLowerCase();
+        const status = card.getAttribute('data-status').toLowerCase();
+
+        const nameMatch = name.includes(nameValue);
+        const languageMatch = languageValue === "" || languages.includes(languageValue);
+        const regionMatch = regionValue === "" || region.includes(regionValue);
+        const statusMatch = statusValue === "" || status === statusValue;
+
+        if(nameMatch && languageMatch && regionMatch && statusMatch) {
+          card.style.display = "block";
+        } else {
+          card.style.display = "none";
+        }
+      });
+    }
+
+    filterName.addEventListener('input', filterTherapists);
+    filterLanguage.addEventListener('change', filterTherapists);
+    filterRegion.addEventListener('change', filterTherapists);
+    filterStatus.addEventListener('change', filterTherapists);
+
+    // Reset filter functionality
+    resetFilter.addEventListener('click', () => {
+      filterName.value = "";
+      filterLanguage.value = "";
+      filterRegion.value = "";
+      filterStatus.value = "";
+      filterTherapists();
     });
   </script>
 </body>

@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Learn More - Manoved</title>
+  <!-- Font Awesome for icons -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <style>
+    /* --------------------- */
+    /* Basic Reset & Globals */
+    /* --------------------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f7f9fc;
+      color: #333;
+      line-height: 1.6;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    /* --------------------- */
+    /* Navigation */
+    /* --------------------- */
+    .navbar {
+      background: #2575fc;
+      padding: 1rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+    }
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .nav-logo {
+      color: #fff;
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+    .nav-menu {
+      list-style: none;
+      display: flex;
+    }
+    .nav-item {
+      margin-left: 20px;
+    }
+    .nav-link {
+      color: #fff;
+      font-size: 1rem;
+      transition: color 0.3s;
+    }
+    .nav-link:hover, .nav-link.active {
+      color: #ffcc00;
+    }
+    .nav-icon {
+      display: none;
+      color: #fff;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    @media (max-width: 768px) {
+      .nav-menu {
+        display: none;
+        flex-direction: column;
+        background: #2575fc;
+        width: 100%;
+      }
+      .nav-menu.active {
+        display: flex;
+      }
+      .nav-item {
+        margin: 10px 0;
+        text-align: center;
+      }
+      .nav-icon {
+        display: block;
+      }
+    }
+    /* --------------------- */
+    /* Hero Section (Blue Shade, White Font) */
+    /* --------------------- */
+    .hero {
+      background: linear-gradient(135deg, #2575fc, #6a11cb);
+      color: #fff;
+      height: 600px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .hero-content {
+      position: relative;
+      text-align: center;
+      color: #fff;
+      padding: 20px;
+    }
+    .hero-content h1 {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+     
+    }
+    .hero-content p {
+      font-size: 1.5rem;
+      max-width: 800px;
+      margin: 0 auto;
+  
+    }
+    /* --------------------- */
+    /* Container */
+    /* --------------------- */
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    /* --------------------- */
+    /* Mission Section */
+    /* --------------------- */
+    .mission {
+      background: #fff;
+      padding: 60px 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      margin-top: -80px;
+      position: relative;
+      z-index: 10;
+      text-align: center;
+    }
+    .mission h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      color: #2575fc;
+    }
+    .mission p {
+      font-size: 1.2rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    /* --------------------- */
+    /* Info Section */
+    /* --------------------- */
+    .info-section {
+      margin: 60px 0;
+      text-align: center;
+    }
+    .info-section h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      color: #2575fc;
+    }
+    .info-section p {
+      font-size: 1.1rem;
+      max-width: 800px;
+      margin: 0 auto 20px auto;
+    }
+    /* --------------------- */
+    /* Steps Section (Flowchart) */
+    /* --------------------- */
+    .steps-section {
+      margin: 60px 0;
+      text-align: center;
+    }
+    .steps-section h2 {
+      font-size: 2.5rem;
+      margin-bottom: 40px;
+      color: #2575fc;
+    }
+    .flowchart-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      position: relative;
+    }
+    .step {
+      background: #f9f9f9;
+      border-radius: 10px;
+      padding: 20px;
+      width: 250px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s, background 0.3s;
+      cursor: pointer;
+      position: relative;
+      z-index: 1;
+    }
+    .step:hover {
+      background: #e6f0ff;
+      transform: translateY(-5px);
+    }
+    .step .step-icon {
+      font-size: 3rem;
+      color: #2575fc;
+      margin-bottom: 15px;
+    }
+    .step h3 {
+      font-size: 1.6rem;
+      margin-bottom: 10px;
+      color: #333;
+    }
+    .step p {
+      font-size: 1rem;
+      color: #555;
+    }
+    /* Hover Icon Below Tile */
+    .hover-icon {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.3s, transform 0.3s;
+      text-align: center;
+      margin-top: 10px;
+    }
+    .step:hover .hover-icon {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* Specific Hover Icons for Each Step */
+    #step1 .hover-icon i {
+      /* Login icon for community */
+      font-size: 2.5rem;
+      color: #ffcc00;
+    }
+    #step2 .hover-icon i {
+      /* Lightbulb icon for self-assessment */
+      font-size: 2.5rem;
+      color: #ffcc00;
+    }
+    #step3 .hover-icon i {
+      /* Clock icon for scheduling */
+      font-size: 2.5rem;
+      color: #ffcc00;
+    }
+    #step4 .hover-icon i {
+      /* Video icon for Zoom */
+      font-size: 2.5rem;
+      color: #ffcc00;
+    }
+    /* Arrows between steps */
+    .arrow {
+      width: 60px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 0;
+      transition: stroke 0.3s;
+    }
+    .arrow svg {
+      width: 100%;
+      height: 100%;
+    }
+    .arrow path {
+      stroke: #aaa;
+      stroke-width: 2;
+      fill: none;
+      stroke-dasharray: 5,5;
+      transition: stroke 0.3s;
+    }
+    .step:hover ~ .arrow path,
+    .arrow:hover path {
+      stroke: #2575fc;
+    }
+    @media (max-width: 768px) {
+      .flowchart-container {
+        flex-direction: column;
+      }
+      .arrow {
+        transform: rotate(90deg);
+        margin: 10px 0;
+      }
+    }
+    /* --------------------- */
+    /* Call-to-Action Section */
+    /* --------------------- */
+    .cta-section {
+      background: linear-gradient(135deg, #2575fc, #6a11cb);
+      color: #fff;
+      text-align: center;
+      padding: 60px 20px;
+      margin: 60px 0;
+    }
+    .cta-section h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+    .cta-section p {
+      font-size: 1.2rem;
+      max-width: 800px;
+      margin: 0 auto 30px;
+    }
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .cta-btn {
+      background: #ffcc00;
+      color: #2575fc;
+      padding: 15px 30px;
+      border-radius: 5px;
+      font-weight: bold;
+      text-transform: uppercase;
+      transition: background 0.3s;
+    }
+    .cta-btn:hover {
+      background: #e6b800;
+    }
+    /* --------------------- */
+    /* Footer */
+    /* --------------------- */
+    footer {
+      background: #2575fc;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">Manoved</a>
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+        <li class="nav-item"><a href="therapists.html" class="nav-link">Therapists</a></li>
+        <li class="nav-item"><a href="about.html" class="nav-link active">About</a></li>
+        <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+        <li class="nav-item"><a href="login.html" class="nav-link">Login</a></li>
+        <li class="nav-item"><a href="login.html" class="nav-link">Register</a></li>
+      </ul>
+      <div class="nav-icon">
+        <i class="fas fa-bars"></i>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <div class="hero">
+    <div class="hero-content">
+      <h1>Learn More About Manoved</h1>
+      <p>Normalizing mental health for a brighter future</p>
+    </div>
+  </div>
+
+  <!-- Mission Section -->
+  <section class="mission">
+    <h2>Our Vision & Mission</h2>
+    <p>
+      Manoved is on a mission to normalize depression and other mental health challenges by providing accessible, affordable, and high-quality mental healthcare to everyone. We focus on improving the mental well-being of young India for a healthier society and a brighter future.
+    </p>
+  </section>
+
+  <!-- Info Section -->
+  <section class="info-section">
+    <h2>Our Services & Innovations</h2>
+    <p>
+      We offer expert therapy sessions, self-help resources, educational blogs, and interactive wellness programs—all at a price everyone can afford. Our carefully selected therapists are among the best in their fields, and with upcoming ML and AI integrations, we’ll personalize your therapy experience like never before.
+    </p>
+  </section>
+
+  <!-- How to Get Therapy (Interactive Flowchart) Section -->
+  <section class="steps-section">
+    <h2>How to Get Therapy with Manoved</h2>
+    <div class="flowchart-container">
+      <!-- Step 1 -->
+      <div class="step" id="step1">
+        <i class="fas fa-handshake step-icon"></i>
+        <h3>Join Our Community</h3>
+        <p>Become a member of our supportive network.</p>
+        <div class="hover-icon">
+          <i class="fas fa-sign-in-alt"></i>
+        </div>
+      </div>
+      <!-- Arrow -->
+      <div class="arrow">
+        <svg viewBox="0 0 60 30" preserveAspectRatio="none">
+          <path d="M0,15 Q30,0 60,15"/>
+        </svg>
+      </div>
+      <!-- Step 2 -->
+      <div class="step" id="step2">
+        <i class="fas fa-edit step-icon"></i>
+        <h3>Self-Assessment</h3>
+        <p>(Optional) Complete a brief questionnaire for a personalized match.</p>
+        <div class="hover-icon">
+          <i class="fas fa-lightbulb"></i>
+        </div>
+      </div>
+      <!-- Arrow -->
+      <div class="arrow">
+        <svg viewBox="0 0 60 30" preserveAspectRatio="none">
+          <path d="M0,15 Q30,0 60,15"/>
+        </svg>
+      </div>
+      <!-- Step 3 -->
+      <div class="step" id="step3">
+        <i class="fas fa-calendar-check step-icon"></i>
+        <h3>Schedule Your Session</h3>
+        <p>Choose a convenient time from our therapist schedules.</p>
+        <div class="hover-icon">
+          <i class="fas fa-clock"></i>
+        </div>
+      </div>
+      <!-- Arrow -->
+      <div class="arrow">
+        <svg viewBox="0 0 60 30" preserveAspectRatio="none">
+          <path d="M0,15 Q30,0 60,15"/>
+        </svg>
+      </div>
+      <!-- Step 4 -->
+      <div class="step" id="step4">
+        <i class="fas fa-credit-card step-icon"></i>
+        <h3>Secure Payment & Connect</h3>
+        <p>Pay securely and start your session.</p>
+        <div class="hover-icon">
+          <i class="fas fa-video"></i>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call-to-Action Section -->
+  <section class="cta-section">
+    <div class="container">
+      <h2>Your Mental Well-Being Journey Starts Here</h2>
+      <p>
+        Take the first step toward better mental health with Manoved. Whether you’re seeking professional support or looking to grow your psychology practice, we’re here to support you every step of the way.
+      </p>
+      <div class="cta-buttons">
+        <a href="login.html" class="cta-btn">Sign Up Today</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Manoved. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile navigation toggle
+    const navIcon = document.querySelector('.nav-icon');
+    const navMenu = document.querySelector('.nav-menu');
+    navIcon.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+    });
+  </script>
+</body>
+</html>

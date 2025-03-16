@@ -3,10 +3,240 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login - Manoved</title>
+  <title>Manoved - Empowering Minds & Transforming Lives</title>
   <link rel="stylesheet" href="styles.css" />
   <!-- Font Awesome for icons -->
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <style>
+    /* Reset & Base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f4f8;
+      color: #333;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    
+    /* Navigation */
+    .navbar {
+      background: #2575fc;
+      padding: 1rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+    }
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .nav-logo {
+      color: #fff;
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+    .nav-menu {
+      list-style: none;
+      display: flex;
+    }
+    .nav-item {
+      margin-left: 20px;
+    }
+    .nav-link {
+      color: #fff;
+      font-size: 1rem;
+      transition: color 0.3s;
+    }
+    .nav-link:hover, .nav-link.active {
+      color: #ffcc00;
+    }
+    .nav-icon {
+      display: none;
+      color: #fff;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    @media (max-width: 768px) {
+      .nav-menu {
+        display: none;
+        flex-direction: column;
+        background: #2575fc;
+        width: 100%;
+      }
+      .nav-menu.active {
+        display: flex;
+      }
+      .nav-item {
+        margin: 10px 0;
+        text-align: center;
+      }
+      .nav-icon {
+        display: block;
+      }
+    }
+    
+    /* Hero Section */
+    .hero-section {
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      color: #fff;
+      padding: 150px 20px 100px;
+      text-align: center;
+      margin-top: 80px; /* space for fixed nav */
+      position: relative;
+    }
+    .hero-section::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.3);
+      z-index: 0;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+    .hero-content h1 {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+    }
+    .hero-content p {
+      font-size: 1.5rem;
+      margin-bottom: 30px;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero-content button {
+      padding: 12px 24px;
+      background: #ffcc00;
+      border: none;
+      border-radius: 5px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #2575fc;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .hero-content button:hover {
+      background: #e6b800;
+    }
+    
+    /* Container & Section Styles */
+    .container {
+      max-width: 1200px;
+      margin: 50px auto;
+      padding: 0 20px;
+    }
+    section {
+      margin-bottom: 60px;
+    }
+    section h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      text-align: center;
+      color: #2575fc;
+    }
+    section p {
+      font-size: 1rem;
+      text-align: center;
+      margin-bottom: 20px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    /* Benefits & Extra Content Grids */
+    .benefits-grid, .extra-content-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+    .benefit-card, .extra-card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
+    .benefit-card:hover, .extra-card:hover {
+      transform: translateY(-5px);
+    }
+    .benefit-card i, .extra-card i {
+      font-size: 2.5rem;
+      color: #2575fc;
+      margin-bottom: 15px;
+    }
+    .benefit-card h3, .extra-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+    
+    /* Call-to-Action Section */
+    .cta-section {
+      background: linear-gradient(135deg, #2575fc, #6a11cb);
+      color: #fff;
+      padding: 60px 20px;
+      text-align: center;
+    }
+    .cta-section h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+    .cta-section p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .cta-btn {
+      background: #ffcc00;
+      color: #2575fc;
+      padding: 15px 30px;
+      border-radius: 5px;
+      text-transform: uppercase;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+    .cta-btn:hover {
+      background: #e6b800;
+    }
+    
+    /* Footer */
+    .footer {
+      background: #2575fc;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+    }
+  </style>
 </head>
 <body>
   <!-- Navigation Menu -->
@@ -14,11 +244,11 @@
     <div class="nav-container">
       <a href="index.html" class="nav-logo">Manoved</a>
       <ul class="nav-menu">
-        <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+        <li class="nav-item"><a href="index.html" class="nav-link active">Home</a></li>
         <li class="nav-item"><a href="therapists.html" class="nav-link">Therapists</a></li>
         <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
         <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
-        <li class="nav-item"><a href="login.html" class="nav-link active">Login</a></li>
+        <li class="nav-item"><a href="login.html" class="nav-link">Login</a></li>
         <li class="nav-item"><a href="register.html" class="nav-link">Register</a></li>
       </ul>
       <div class="nav-icon">
@@ -26,37 +256,109 @@
       </div>
     </div>
   </nav>
-
-  <!-- Main Content -->
-  <div class="background">
-    <div class="login-container">
-      <div class="login-box">
-        <h2>Welcome Back to <span class="brand">Manoved</span></h2>
-        <p class="subtitle">Your journey to inner peace begins here.</p>
-
-        <form id="loginForm">
-          <div class="input-group">
-            <i class="fas fa-envelope"></i>
-            <input type="email" placeholder="Email" required />
-          </div>
-          <div class="input-group">
-            <i class="fas fa-lock"></i>
-            <input type="password" placeholder="Password" required />
-          </div>
-          <button type="submit" class="btn">Login</button>
-        </form>
-
-        <p class="register-link">New here? <a href="register.html">Sign up</a></p>
-        <p class="trust-message">Your privacy is our priority. Safe, secure, and confidential.</p>
+  
+  <!-- Hero Section with "Play the Quiz" Button -->
+  <header class="hero-section">
+    <div class="hero-content">
+      <h1>Empowering Minds & Transforming Lives</h1>
+      <p class="hero-tagline">Your Trusted Mental Health Partner</p>
+      <button onclick="window.location.href='quiz.html';">Play the Quiz</button>
+    </div>
+  </header>
+  
+  <!-- About Section -->
+  <section class="about-section">
+    <div class="container">
+      <h2>About Manoved</h2>
+      <p>
+        At Manoved, we are revolutionizing mental healthcare by bridging the gap between individuals and qualified psychologists. Our platform makes mental health care accessible, efficient, and of the highest quality. Whether you're seeking support or offering professional expertise, Manoved is your trusted partner in improving mental well-being.
+      </p>
+    </div>
+  </section>
+  
+  <!-- Benefits & Services Section -->
+  <section class="benefits-section">
+    <div class="container">
+      <h2>For Individuals</h2>
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <i class="fas fa-headset"></i>
+          <h3>Expert Mental Health Care at Your Fingertips</h3>
+          <p>Connect with licensed and experienced psychologists specializing in anxiety, depression, stress management, and personal growth.</p>
+        </div>
+        <div class="benefit-card">
+          <i class="fas fa-user-md"></i>
+          <h3>Personalized Therapy & Counseling</h3>
+          <p>Access tailored mental wellness plans designed to meet your unique emotional and psychological needs.</p>
+        </div>
+        <div class="benefit-card">
+          <i class="fas fa-lock"></i>
+          <h3>Confidential & Secure Sessions</h3>
+          <p>Schedule therapy sessions at your convenience, ensuring complete privacy and ease.</p>
+        </div>
+        <div class="benefit-card">
+          <i class="fas fa-users"></i>
+          <h3>Supportive Community & Resources</h3>
+          <p>Join a mental wellness network that enhances healing, resilience, and personal growth through forums and wellness tools.</p>
+        </div>
       </div>
     </div>
-  </div>
-
+  </section>
+  
+  <!-- Extra Content Overview Section -->
+  <section class="extra-content-section">
+    <div class="container">
+      <h2>Beyond Therapy</h2>
+      <div class="extra-content-grid">
+        <div class="extra-card">
+          <i class="fas fa-book"></i>
+          <h3>Self-Help Resources & Mental Wellness Tools</h3>
+          <p>Guided exercises, meditation techniques, and coping strategies for better mental health.</p>
+        </div>
+        <div class="extra-card">
+          <i class="fas fa-newspaper"></i>
+          <h3>Educational Blogs & Expert Articles</h3>
+          <p>Stay informed with research-backed insights on psychology, therapy techniques, and mental health awareness.</p>
+        </div>
+        <div class="extra-card">
+          <i class="fas fa-running"></i>
+          <h3>Wellness Challenges & Mindfulness Activities</h3>
+          <p>Interactive programs to help you build resilience and emotional strength.</p>
+        </div>
+        <div class="extra-card">
+          <i class="fas fa-briefcase"></i>
+          <h3>Professional Development for Psychologists</h3>
+          <p>Access career-enhancing resources, workshops, and networking opportunities to stay ahead in your field.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Final Call-to-Action Section -->
+  <section class="cta-section">
+    <div class="container">
+      <h2>Your mental well-being journey starts here.</h2>
+      <p>
+        Take the first step toward better mental health with Manoved. Whether you're seeking professional support or looking to grow your psychology practice, we are here to support you.
+      </p>
+      <div class="cta-buttons">
+        <a href="register.html" class="btn cta-btn">Sign Up Today</a>
+        <a href="about.html" class="btn cta-btn learn-more">Learn More</a>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 Manoved. All rights reserved.</p>
+    </div>
+  </footer>
+  
   <script>
-    // Toggle the navigation menu on mobile devices
+    // Mobile navigation toggle
     const navIcon = document.querySelector('.nav-icon');
     const navMenu = document.querySelector('.nav-menu');
-
     navIcon.addEventListener('click', () => {
       navMenu.classList.toggle('active');
     });

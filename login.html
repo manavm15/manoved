@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Navigation Menu -->
+    <nav class="navbar">
+        <div class="nav-container">
+          <a href="index.html" class="nav-logo">Manoved</a>
+          <ul class="nav-menu">
+            <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+            <li class="nav-item"><a href="therapists.html" class="nav-link">Therapists</a></li>
+            <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+            <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+            <li class="nav-item"><a href="login.html" class="nav-link active">Login</a></li>
+            <li class="nav-item"><a href="register.html" class="nav-link">Register</a></li>
+          </ul>
+          <div class="nav-icon">
+            <i class="fas fa-bars"></i>
+          </div>
+        </div>
+      </nav>
+  <title>Register - Manoved</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Font Awesome for icons -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <!-- Firebase Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-auth-compat.js"></script>
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Font Awesome for icons -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <style>
+    /* Reset & Base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f4f8;
+      color: #333;
+      line-height: 1.6;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    
+    /* Navigation */
+    .navbar {
+      background: #2575fc;
+      padding: 1rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+    }
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .nav-logo {
+      color: #fff;
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+    .nav-menu {
+      list-style: none;
+      display: flex;
+    }
+    .nav-item {
+      margin-left: 20px;
+    }
+    .nav-link {
+      color: #fff;
+      font-size: 1rem;
+      transition: color 0.3s;
+    }
+    .nav-link:hover,
+    .nav-link.active {
+      color: #ffcc00;
+    }
+    .nav-icon {
+      display: none;
+      color: #fff;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    @media (max-width: 768px) {
+      .nav-menu {
+        display: none;
+        flex-direction: column;
+        background: #2575fc;
+        width: 100%;
+      }
+      .nav-menu.active {
+        display: flex;
+      }
+      .nav-item {
+        margin: 10px 0;
+        text-align: center;
+      }
+      .nav-icon {
+        display: block;
+      }
+    }
+    
+    /* Hero Section */
+    .hero-section {
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      color: #fff;
+      padding: 150px 20px 100px;
+      text-align: center;
+      margin-top: 80px; /* space for fixed nav */
+    }
+    .hero-section h1 {
+      font-size: 2.8rem;
+      margin-bottom: 20px;
+    }
+    .hero-tagline {
+      font-size: 1.4rem;
+      margin-bottom: 40px;
+      font-weight: 300;
+    }
+    
+    /* Container & Section Styles */
+    .container {
+      max-width: 1200px;
+      margin: 50px auto;
+      padding: 0 20px;
+    }
+    section {
+      margin-bottom: 60px;
+    }
+    section h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      text-align: center;
+      color: #2575fc;
+    }
+    section p {
+      font-size: 1rem;
+      text-align: center;
+      margin-bottom: 20px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    /* Benefits & Extra Content Grids */
+    .benefits-grid, .extra-content-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+    .benefit-card, .extra-card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
+    .benefit-card:hover, .extra-card:hover {
+      transform: translateY(-5px);
+    }
+    .benefit-card i, .extra-card i {
+      font-size: 2.5rem;
+      color: #2575fc;
+      margin-bottom: 15px;
+    }
+    .benefit-card h3, .extra-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+    
+    /* Footer */
+    .footer {
+      background: #2575fc;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+    }
+    .register-container {
+      max-width: 400px;
+      margin: 100px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .register-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .input-group {
+      margin-bottom: 15px;
+    }
+    .input-group input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    .register-container button {
+      width: 100%;
+      padding: 12px;
+      background: #6a11cb;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    .register-container button:hover {
+      background: #2575fc;
+    }
+    .social-buttons {
+      margin-top: 20px;
+    }
+    .social-buttons button {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      color: #fff;
+    }
+    .google-btn {
+      background: #db4437;
+    }
+    .phone-btn {
+      background: #34a853;
+    }
+    p {
+      text-align: center;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="register-container">
+    <h2>Register for Manoved</h2>
+    <form id="registerForm">
+      <div class="input-group">
+        <input type="text" id="firstName" placeholder="First Name" required>
+      </div>
+      <div class="input-group">
+        <input type="text" id="lastName" placeholder="Last Name" required>
+      </div>
+      <div class="input-group">
+        <input type="email" id="regEmail" placeholder="Email" required>
+      </div>
+      <div class="input-group">
+        <input type="password" id="regPassword" placeholder="Password" required>
+      </div>
+      <div class="input-group">
+        <input type="tel" id="regPhone" placeholder="Phone Number" required>
+      </div>
+      <button type="submit">Register</button>
+    </form>
+    <div class="social-buttons">
+      <button class="google-btn" id="googleRegister">Sign up with Google</button>
+      <button class="phone-btn" id="phoneRegister">Sign up with Phone</button>
+    </div>
+    <p>Already have an account? <a href="login.html">Login</a></p>
+  </div>
+
+  <script>
+    // Firebase configuration – use the same config as the login page
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT_ID.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    // Conventional Registration with Email/Password
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = document.getElementById('regEmail').value;
+      const password = document.getElementById('regPassword').value;
+      auth.createUserWithEmailAndPassword(email, password)
+        .then(userCredential => {
+          alert("Registration successful!");
+          // Optionally, update the user's profile with first and last name, phone, etc.
+          window.location.href = "index.html";
+        })
+        .catch(error => {
+          alert("Error: " + error.message);
+        });
+    });
+
+    // Google Registration
+    document.getElementById('googleRegister').addEventListener('click', function() {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      auth.signInWithPopup(provider)
+        .then(result => {
+          alert("Registered with Google!");
+          window.location.href = "index.html";
+        })
+        .catch(error => {
+          alert("Error: " + error.message);
+        });
+    });
+
+    // Phone Registration (simplified demo)
+    document.getElementById('phoneRegister').addEventListener('click', function() {
+      const phoneNumber = prompt("Enter your phone number (with country code):");
+      if (phoneNumber) {
+        alert("Phone registration is not fully implemented in this demo.");
+      }
+    });
+  </script>
+</body>
+</html>
